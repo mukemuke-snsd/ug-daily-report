@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UG 日报 2026-04-04</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f7fa; color: #1a1a2e; padding: 24px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  .subtitle { color: #666; margin-bottom: 24px; font-size: 14px; }
+  .card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 18px; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+  .card h3 { font-size: 15px; margin: 16px 0 8px; color: #475569; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .summary-item { text-align: center; padding: 16px; background: #f8f9fa; border-radius: 8px; }
+  .summary-item .label { font-size: 12px; color: #666; margin-bottom: 4px; }
+  .summary-item .value { font-size: 28px; font-weight: 700; }
+  .summary-item .change { font-size: 13px; margin-top: 4px; font-weight: 600; }
+  .up { color: #16a34a; }
+  .down { color: #dc2626; }
+  .neutral { color: #6b7280; }
+
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .chart-container { position: relative; height: 260px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #f8f9fa; font-weight: 600; font-size: 12px; color: #475569; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.subtotal { font-weight: 700; background: #f8f9fa; }
+  tr.highlight-down { background: #fef2f2; }
+  tr.highlight-up { background: #f0fdf4; }
+
+  .alert-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .alert-table th { background: #f8f9fa; padding: 10px 12px; text-align: left; font-size: 12px; }
+  .alert-table td { padding: 10px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .alert-table .signal { max-width: 400px; }
+  .alert-table .action { max-width: 350px; color: #475569; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-right: 4px; }
+  .badge-p0 { background: #fee2e2; color: #991b1b; }
+  .badge-p1 { background: #fee2e2; color: #991b1b; }
+  .badge-p2 { background: #fef3c7; color: #92400e; }
+  .badge-ok { background: #dcfce7; color: #166534; }
+
+  .funnel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .platform-label { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 8px; padding: 4px 8px; background: #e2e8f0; border-radius: 6px; display: inline-block; }
+
+  .footer { margin-top: 16px; padding: 16px 24px; color: #94a3b8; font-size: 11px; line-height: 1.8; text-align: center; }
+  .footer span { margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>UG 日报 | 2026-04-04（周六）</h1>
+  <p class="subtitle">对比基准：2026-03-28（上周六） | 数据延迟 ~2 天 | 生成时间：2026-04-06</p>
+
+  <div class="card">
+    <h2>核心判断</h2>
+    <p style="color:#475569; margin-bottom:16px; font-size:14px;">UV 降 → AB 降 → 但 AB2 逆势增长。AB→AB2% 从 13.8% 提升至 21.5%。</p>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="label">Web UV</div>
+        <div class="value">29,307</div>
+        <div class="change down">WoW -17.0%</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">App UV</div>
+        <div class="value">983</div>
+        <div class="change down">WoW -74.0%</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">AB（全口径）</div>
+        <div class="value">461</div>
+        <div class="change down">WoW -6.7%</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">AB 拆分（人头）</div>
+        <div style="display:flex; justify-content:center; gap:24px; margin-top:6px;">
+          <div style="text-align:center;">
+            <div style="font-size:11px; color:#666;">QDR</div>
+            <div style="font-size:22px; font-weight:700;">279</div>
+            <div class="change down" style="font-size:12px;">-5.4%</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:11px; color:#666;">RFQ</div>
+            <div style="font-size:22px; font-weight:700;">206</div>
+            <div class="change down" style="font-size:12px;">-3.3%</div>
+          </div>
+        </div>
+      </div>
+      <div class="summary-item">
+        <div class="label">AB2（全口径）</div>
+        <div class="value" style="color:#16a34a;">99</div>
+        <div class="change up">WoW +45.6%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>UV 层趋势（14 天）</h2>
+    <div class="chart-row">
+      <div>
+        <h3>Web UV（ep + wlw）</h3>
+        <div class="chart-container"><canvas id="uvChart"></canvas></div>
+      </div>
+      <div>
+        <h3>App UV（ep + wlw）</h3>
+        <div class="chart-container"><canvas id="appChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AB 层趋势（14 天）</h2>
+    <div class="chart-row">
+      <div>
+        <h3>QDR AB（ep + wlw）</h3>
+        <div class="chart-container"><canvas id="qdrChart"></canvas></div>
+      </div>
+      <div>
+        <h3>RFQ AB（ep + wlw）</h3>
+        <div class="chart-container"><canvas id="rfqChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AB2 层趋势（14 天）</h2>
+    <div style="max-width:680px;">
+      <h3>AB2（ep + wlw）</h3>
+      <div class="chart-container"><canvas id="ab2Chart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>UV 下钻（漏斗第一层）</h2>
+    <div class="funnel-row">
+      <div>
+        <span class="platform-label">ep</span>
+        <table>
+          <thead><tr><th>渠道</th><th class="num">4/4 UV</th><th class="num">3/28 UV</th><th class="num">WoW</th><th class="num">占比</th></tr></thead>
+          <tbody>
+            <tr><td>Organic Search</td><td class="num">12,301</td><td class="num">14,114</td><td class="num down">-12.8%</td><td class="num">77.4%</td></tr>
+            <tr><td>Direct</td><td class="num">2,357</td><td class="num">2,482</td><td class="num down">-5.0%</td><td class="num">14.8%</td></tr>
+            <tr><td>Geo</td><td class="num">433</td><td class="num">482</td><td class="num down">-10.2%</td><td class="num">2.7%</td></tr>
+            <tr><td>Referral</td><td class="num">337</td><td class="num">370</td><td class="num down">-8.9%</td><td class="num">2.1%</td></tr>
+            <tr><td>Email</td><td class="num">185</td><td class="num">187</td><td class="num down">-1.1%</td><td class="num">1.2%</td></tr>
+            <tr><td>Display</td><td class="num">136</td><td class="num">140</td><td class="num down">-2.9%</td><td class="num">0.9%</td></tr>
+            <tr><td>Others</td><td class="num">152</td><td class="num">177</td><td class="num down">-14.1%</td><td class="num">1.0%</td></tr>
+            <tr class="subtotal"><td>合计</td><td class="num">15,901</td><td class="num">17,952</td><td class="num down">-11.4%</td><td class="num">100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <span class="platform-label">wlw</span>
+        <table>
+          <thead><tr><th>渠道</th><th class="num">4/4 UV</th><th class="num">3/28 UV</th><th class="num">WoW</th><th class="num">占比</th></tr></thead>
+          <tbody>
+            <tr class="highlight-down"><td>Organic Search</td><td class="num">11,304</td><td class="num">14,351</td><td class="num down">-21.2%</td><td class="num">84.3%</td></tr>
+            <tr><td>Direct</td><td class="num">1,199</td><td class="num">1,465</td><td class="num down">-18.2%</td><td class="num">8.9%</td></tr>
+            <tr class="highlight-down"><td>Paid Search</td><td class="num">396</td><td class="num">913</td><td class="num down">-56.6%</td><td class="num">3.0%</td></tr>
+            <tr><td>Referral</td><td class="num">171</td><td class="num">249</td><td class="num down">-31.3%</td><td class="num">1.3%</td></tr>
+            <tr><td>Geo</td><td class="num">150</td><td class="num">166</td><td class="num down">-9.6%</td><td class="num">1.1%</td></tr>
+            <tr><td>Email</td><td class="num">85</td><td class="num">80</td><td class="num up">+6.3%</td><td class="num">0.6%</td></tr>
+            <tr><td>Others</td><td class="num">101</td><td class="num">114</td><td class="num down">-11.4%</td><td class="num">0.8%</td></tr>
+            <tr class="subtotal"><td>合计</td><td class="num">13,406</td><td class="num">17,338</td><td class="num down">-22.7%</td><td class="num">100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AB 下钻（漏斗第二层）</h2>
+    <p style="color:#475569; margin-bottom:12px; font-size:13px;">口径：active_buyers 去重人头（buyer_id），按 request_type 拆分。同一 buyer 可能同时有 QDR + RFQ，故 QDR AB + RFQ AB > AB 合计。</p>
+    <h3>QDR AB：279（WoW -5.4%）</h3>
+    <table>
+      <thead><tr><th>平台</th><th>来源</th><th class="num">4/4</th><th class="num">3/28</th><th class="num">WoW</th></tr></thead>
+      <tbody>
+        <tr class="highlight-up"><td rowspan="4"><strong>ep</strong></td><td>web</td><td class="num">96</td><td class="num">84</td><td class="num up">+14.3%</td></tr>
+        <tr><td>app</td><td class="num">76</td><td class="num">87</td><td class="num down">-12.6%</td></tr>
+        <tr class="highlight-up"><td>alibaba</td><td class="num">49</td><td class="num">38</td><td class="num up">+28.9%</td></tr>
+        <tr class="subtotal highlight-up"><td>小计</td><td class="num">216</td><td class="num">205</td><td class="num up">+5.4%</td></tr>
+        <tr class="highlight-down"><td rowspan="4"><strong>wlw</strong></td><td>web</td><td class="num">39</td><td class="num">57</td><td class="num down">-31.6%</td></tr>
+        <tr class="highlight-down"><td>app</td><td class="num">6</td><td class="num">14</td><td class="num down">-57.1%</td></tr>
+        <tr><td>alibaba</td><td class="num">18</td><td class="num">19</td><td class="num down">-5.3%</td></tr>
+        <tr class="subtotal highlight-down"><td>小计</td><td class="num">63</td><td class="num">90</td><td class="num down">-30.0%</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px;">RFQ AB：206（WoW -3.3%）</h3>
+    <table>
+      <thead><tr><th>平台</th><th>来源</th><th class="num">4/4</th><th class="num">3/28</th><th class="num">WoW</th></tr></thead>
+      <tbody>
+        <tr class="highlight-up"><td rowspan="4"><strong>ep</strong></td><td>web</td><td class="num">38</td><td class="num">29</td><td class="num up">+31.0%</td></tr>
+        <tr class="highlight-up"><td>app</td><td class="num">26</td><td class="num">22</td><td class="num up">+18.2%</td></tr>
+        <tr><td>alibaba</td><td class="num">88</td><td class="num">96</td><td class="num down">-8.3%</td></tr>
+        <tr class="subtotal highlight-up"><td>小计</td><td class="num">150</td><td class="num">146</td><td class="num up">+2.7%</td></tr>
+        <tr><td rowspan="4"><strong>wlw</strong></td><td>web</td><td class="num">1</td><td class="num">3</td><td class="num neutral">—</td></tr>
+        <tr><td>app</td><td class="num">0</td><td class="num">1</td><td class="num neutral">—</td></tr>
+        <tr class="highlight-down"><td>alibaba</td><td class="num">55</td><td class="num">63</td><td class="num down">-12.7%</td></tr>
+        <tr class="subtotal highlight-down"><td>小计</td><td class="num">56</td><td class="num">67</td><td class="num down">-16.4%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>AB2 下钻（漏斗第三层）</h2>
+    <p style="color:#475569; margin-bottom:12px; font-size:14px;">全站 AB2 = 99，WoW +45.6%（3/28: 68）。ep 全源增长，wlw 绝对值低位持平。</p>
+    <table>
+      <thead><tr><th>平台</th><th>来源</th><th class="num">4/4 AB2</th><th class="num">3/28 AB2</th><th class="num">WoW</th></tr></thead>
+      <tbody>
+        <tr class="highlight-up"><td rowspan="4"><strong>ep</strong></td><td>web</td><td class="num">36</td><td class="num">23</td><td class="num up">+56.5%</td></tr>
+        <tr class="highlight-up"><td>app</td><td class="num">31</td><td class="num">27</td><td class="num up">+14.8%</td></tr>
+        <tr class="highlight-up"><td>alibaba</td><td class="num">27</td><td class="num">12</td><td class="num up">+125.0%</td></tr>
+        <tr class="subtotal highlight-up"><td>小计</td><td class="num">92</td><td class="num">61</td><td class="num up">+50.8%</td></tr>
+        <tr><td rowspan="4"><strong>wlw</strong></td><td>alibaba</td><td class="num">4</td><td class="num">0</td><td class="num neutral">—</td></tr>
+        <tr><td>web</td><td class="num">2</td><td class="num">3</td><td class="num neutral">—</td></tr>
+        <tr><td>app</td><td class="num">1</td><td class="num">4</td><td class="num neutral">—</td></tr>
+        <tr class="subtotal"><td>小计</td><td class="num">7</td><td class="num">7</td><td class="num neutral">0.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #dc2626;">
+    <h2>异动 & 行动</h2>
+    <p style="color:#666; margin-bottom:16px; font-size:13px;">汇总全部层级的关键信号，从高到低排列。扫完此表 = 读完全文。</p>
+    <table class="alert-table">
+      <thead><tr><th style="width:80px;">级别</th><th class="signal">信号</th><th class="action">下一步</th></tr></thead>
+      <tbody>
+        <tr style="background:#fef2f2;">
+          <td><span class="badge badge-p0">❌ P0</span></td>
+          <td class="signal">App UV ep -71.2%, wlw -82.9%（工作日同比亦 -60%+，真实下降）</td>
+          <td class="action">排查根因</td>
+        </tr>
+        <tr style="background:#fef2f2;">
+          <td><span class="badge badge-p1">❌ P1</span></td>
+          <td class="signal">wlw Paid Search UV -56.6%（-517，贡献跌幅 13%）</td>
+          <td class="action">排查 campaign</td>
+        </tr>
+        <tr style="background:#fef2f2;">
+          <td><span class="badge badge-p1">❌ P1</span></td>
+          <td class="signal">wlw Organic Search UV -21.2%（-3,047，贡献跌幅 78%）</td>
+          <td class="action">观察周一；若连续下降则下钻页面类型</td>
+        </tr>
+        <tr style="background:#fef2f2;">
+          <td><span class="badge badge-p1">❌ P1</span></td>
+          <td class="signal">wlw QDR AB -30.0%（app -57.1%, web -31.6%）</td>
+          <td class="action">app 联动 App UV；web 下钻渠道×页面</td>
+        </tr>
+        <tr style="background:#fffbeb;">
+          <td><span class="badge badge-p2">⚠️ P2</span></td>
+          <td class="signal">wlw AB→AB2% = 6.0%（ep 为 26.7%），alibaba 回复率最低</td>
+          <td class="action">按类目拆 wlw alibaba 回复率 vs 供给质量</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-ok">✅</span></td>
+          <td class="signal">ep Organic Search UV -12.8%，周六正常回落</td>
+          <td class="action">持续观察</td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><span class="badge badge-ok">✅</span></td>
+          <td class="signal">ep QDR AB +5.4%（web +14.3%, alibaba +28.9% 对冲 app -12.6%）</td>
+          <td class="action">无需行动</td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><span class="badge badge-ok">✅</span></td>
+          <td class="signal">ep RFQ AB +2.7%（web +31%, app +18%），alibaba -8.3% 小幅拖累</td>
+          <td class="action">持续观察</td>
+        </tr>
+        <tr style="background:#f0fdf4;">
+          <td><span class="badge badge-ok">✅</span></td>
+          <td class="signal">ep AB2 +50.8%（AB→AB2% 18.1%→26.7%）</td>
+          <td class="action">提炼 alibaba 改善经验 → 复制到 wlw</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <div>数据来源：Redash → Redshift（ga_user_metrics · fact_direct_requests · fact_rfq_requests · active_buyers · app_user_lt_retention）</div>
+    <div>口径：Web UV = COUNT(DISTINCT visitor_sk)<span>|</span>App UV = total_dau<span>|</span>AB = active_buyers<span>|</span>AB2 = is_ab2 = true<span>|</span>WoW = 对比上周同日</div>
+    <div>生成工具：UG Daily Report · Cursor Agent</div>
+  </div>
+</div>
+
+<script>
+const labels = ["03/22","03/23","03/24","03/25","03/26","03/27","03/28","03/29","03/30","03/31","04/01","04/02","04/03","04/04"];
+
+const epUV = [18073,31807,32149,32091,31606,28027,17956,18044,32261,31328,29651,28148,22906,15901];
+const wlwUV = [19055,31158,30389,31114,30201,25729,17338,19049,29522,27873,24577,23006,17507,13406];
+const totalUV = epUV.map((v,i) => v + wlwUV[i]);
+
+const epAB2 = [60,256,183,183,208,145,61,69,212,210,194,180,143,92];
+const wlwAB2 = [9,58,37,36,44,40,7,5,40,25,41,28,14,7];
+const totalAB2 = epAB2.map((v,i) => v + wlwAB2[i]);
+
+const epQDR = [198,435,367,369,386,298,205,205,364,400,331,312,277,216];
+const wlwQDR = [81,238,226,237,256,187,90,88,228,157,186,154,78,63];
+const totalQDR = epQDR.map((v,i) => v + wlwQDR[i]);
+
+const epRFQ = [153,367,306,281,329,234,146,180,301,320,314,251,226,150];
+const wlwRFQ = [62,146,120,130,123,90,67,70,122,97,109,107,65,56];
+const totalRFQ = epRFQ.map((v,i) => v + wlwRFQ[i]);
+
+const epApp = [1082,1475,1685,1773,2523,2298,2877,2938,1495,1327,1052,1188,971,829];
+const wlwApp = [322,387,487,626,641,713,903,852,413,334,233,256,244,154];
+const totalApp = epApp.map((v,i) => v + wlwApp[i]);
+
+const commonOptions = {
+  responsive: true, maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false },
+  plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+    y: { beginAtZero: false, ticks: { font: { size: 10 } } }
+  }
+};
+
+function makeChart(id, datasets, opts = {}) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: { labels, datasets },
+    options: { ...commonOptions, ...opts }
+  });
+}
+
+const epColor = '#3b82f6';
+const wlwColor = '#f59e0b';
+const totalColor = '#1e293b';
+
+makeChart('uvChart', [
+  { label: '全站', data: totalUV, borderColor: totalColor, borderWidth: 2.5, tension: 0.3, pointRadius: 3 },
+  { label: 'ep', data: epUV, borderColor: epColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 },
+  { label: 'wlw', data: wlwUV, borderColor: wlwColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 }
+]);
+
+makeChart('ab2Chart', [
+  { label: '全站', data: totalAB2, borderColor: totalColor, borderWidth: 2.5, tension: 0.3, pointRadius: 3 },
+  { label: 'ep', data: epAB2, borderColor: epColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 },
+  { label: 'wlw', data: wlwAB2, borderColor: wlwColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 }
+]);
+
+makeChart('qdrChart', [
+  { label: '全站', data: totalQDR, borderColor: totalColor, borderWidth: 2.5, tension: 0.3, pointRadius: 3 },
+  { label: 'ep', data: epQDR, borderColor: epColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 },
+  { label: 'wlw', data: wlwQDR, borderColor: wlwColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 }
+]);
+
+makeChart('appChart', [
+  { label: '全站', data: totalApp, borderColor: totalColor, borderWidth: 2.5, tension: 0.3, pointRadius: 3 },
+  { label: 'ep', data: epApp, borderColor: epColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 },
+  { label: 'wlw', data: wlwApp, borderColor: wlwColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 }
+]);
+
+makeChart('rfqChart', [
+  { label: '全站', data: totalRFQ, borderColor: totalColor, borderWidth: 2.5, tension: 0.3, pointRadius: 3 },
+  { label: 'ep', data: epRFQ, borderColor: epColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 },
+  { label: 'wlw', data: wlwRFQ, borderColor: wlwColor, borderDash: [4,4], borderWidth: 1.5, tension: 0.3, pointRadius: 2 }
+]);
+</script>
+</body>
+</html>
